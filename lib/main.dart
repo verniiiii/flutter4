@@ -15,14 +15,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Список рецептов - С переполнением'),
+          title: const Text('Список рецептов с прокруткой'),
         ),
-        body: Column(
-          children: <Widget>[
-            Text('Все мои рецепты', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            // Добавляем все рецепты в Column - это вызовет переполнение
-            ...recipes.map((recipe) => Text(recipe)),
-          ],
+        body: SingleChildScrollView( // Оборачиваем Column в SingleChildScrollView
+          child: Column(
+            children: <Widget>[
+              Text('Все мои рецепты', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              ...recipes.map((recipe) => Text(recipe)),
+            ],
+          ),
         ),
       ),
     );
