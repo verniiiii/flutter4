@@ -9,20 +9,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Создаем список из 100 рецептов
+    final recipes = List.generate(100, (index) => 'Рецепт ${index + 1}');
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Список рецептов - Без переполнения'),
+          title: const Text('Список рецептов - С переполнением'),
         ),
         body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('Мои рецепты', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            Text('Омлет с сыром'),
-            Text('Паста карбонара'),
-            Text('Салат Цезарь'),
-            Text('Борщ'),
-            Text('Панкейки'),
+            Text('Все мои рецепты', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            // Добавляем все рецепты в Column - это вызовет переполнение
+            ...recipes.map((recipe) => Text(recipe)),
           ],
         ),
       ),
