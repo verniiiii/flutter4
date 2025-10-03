@@ -12,56 +12,74 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Кулинарная книга',
       theme: ThemeData(
-        primarySwatch: Colors.orange,
+        primarySwatch: Colors.green,
       ),
-      home: const RecipeListBasic(),
+      home: const RecipeListBuilder(),
     );
   }
 }
 
-class RecipeListBasic extends StatelessWidget {
-  const RecipeListBasic({super.key});
+class RecipeListBuilder extends StatelessWidget {
+  const RecipeListBuilder({super.key});
+
+  final List<Map<String, dynamic>> recipes = const [
+    {'title': 'Омлет с сыром', 'time': '20 мин', 'type': 'Завтрак'},
+    {'title': 'Спагетти Болоньезе', 'time': '45 мин', 'type': 'Обед'},
+    {'title': 'Куриный суп', 'time': '35 мин', 'type': 'Обед'},
+    {'title': 'Гречневая каша', 'time': '25 мин', 'type': 'Завтрак'},
+    {'title': 'Стейк из лосося', 'time': '30 мин', 'type': 'Ужин'},
+    {'title': 'Овощной салат', 'time': '15 мин', 'type': 'Перекус'},
+    {'title': 'Шоколадные маффины', 'time': '50 мин', 'type': 'Десерт'},
+    {'title': 'Говядина по-тайски', 'time': '40 мин', 'type': 'Ужин'},
+    {'title': 'Фруктовый смузи', 'time': '10 мин', 'type': 'Перекус'},
+    {'title': 'Тирамису', 'time': '90 мин', 'type': 'Десерт'},
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Основной конструктор ListView'),
+        title: const Text('ListView.builder'),
       ),
-      body: ListView(
+      body: ListView.builder(
         padding: const EdgeInsets.all(16.0),
-        children: <Widget>[
-          const Text(
-            'Популярные рецепты',
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 16),
-          _buildRecipeCard('Классический омлет', '15 минут', Icons.breakfast_dining),
-          _buildRecipeCard('Паста карбонара', '25 минут', Icons.dinner_dining),
-          _buildRecipeCard('Салат Цезарь', '20 минут', Icons.lunch_dining),
-          _buildRecipeCard('Домашний борщ', '60 минут', Icons.soup_kitchen),
-          _buildRecipeCard('Воздушные панкейки', '30 минут', Icons.cake),
-          _buildRecipeCard('Шоколадный мусс', '40 минут', Icons.icecream),
-          _buildRecipeCard('Классический омлет', '15 минут', Icons.breakfast_dining),
-          _buildRecipeCard('Паста карбонара', '25 минут', Icons.dinner_dining),
-          _buildRecipeCard('Салат Цезарь', '20 минут', Icons.lunch_dining),
-          _buildRecipeCard('Домашний борщ', '60 минут', Icons.soup_kitchen),
-          _buildRecipeCard('Воздушные панкейки', '30 минут', Icons.cake),
-          _buildRecipeCard('Шоколадный мусс', '40 минут', Icons.icecream),
-        ],
+        itemCount: recipes.length,
+        itemBuilder: (context, index) {
+          final recipe = recipes[index];
+          return Card(
+            margin: const EdgeInsets.only(bottom: 12),
+            child: ListTile(
+              leading: CircleAvatar(
+                backgroundColor: Colors.green[100],
+                child: Icon(
+                  _getIconForType(recipe['type']),
+                  color: Colors.green,
+                ),
+              ),
+              title: Text(recipe['title']),
+              subtitle: Text('${recipe['time']} • ${recipe['type']}'),
+              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+            ),
+          );
+        },
       ),
     );
   }
 
-  Widget _buildRecipeCard(String title, String time, IconData icon) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      child: ListTile(
-        leading: Icon(icon, color: Colors.orange),
-        title: Text(title),
-        subtitle: Text(time),
-        trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-      ),
-    );
+  IconData _getIconForType(String type) {
+    switch (type) {
+      case 'Завтрак':
+        return Icons.breakfast_dining;
+      case 'Обед':
+        return Icons.lunch_dining;
+      case 'Ужин':
+        return Icons.dinner_dining;
+      case 'Десерт':
+        return Icons.cake;
+      case 'Перекус':
+        return Icons.coffee;
+      default:
+        return Icons.restaurant;
+    }
   }
 }
