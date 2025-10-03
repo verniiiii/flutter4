@@ -12,74 +12,84 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Кулинарная книга',
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.purple,
       ),
-      home: const RecipeListBuilder(),
+      home: const RecipeListSeparated(),
     );
   }
 }
 
-class RecipeListBuilder extends StatelessWidget {
-  const RecipeListBuilder({super.key});
+class RecipeListSeparated extends StatelessWidget {
+  const RecipeListSeparated({super.key});
 
-  final List<Map<String, dynamic>> recipes = const [
-    {'title': 'Омлет с сыром', 'time': '20 мин', 'type': 'Завтрак'},
-    {'title': 'Спагетти Болоньезе', 'time': '45 мин', 'type': 'Обед'},
-    {'title': 'Куриный суп', 'time': '35 мин', 'type': 'Обед'},
-    {'title': 'Гречневая каша', 'time': '25 мин', 'type': 'Завтрак'},
-    {'title': 'Стейк из лосося', 'time': '30 мин', 'type': 'Ужин'},
-    {'title': 'Овощной салат', 'time': '15 мин', 'type': 'Перекус'},
-    {'title': 'Шоколадные маффины', 'time': '50 мин', 'type': 'Десерт'},
-    {'title': 'Говядина по-тайски', 'time': '40 мин', 'type': 'Ужин'},
-    {'title': 'Фруктовый смузи', 'time': '10 мин', 'type': 'Перекус'},
-    {'title': 'Тирамису', 'time': '90 мин', 'type': 'Десерт'},
+  final List<String> recipes = const [
+    'Рецепт 1: Классические сырники',
+    'Рецепт 2: Томатный суп с базиликом',
+    'Рецепт 3: Курица терияки с рисом',
+    'Рецепт 4: Шоколадный фондан',
+    'Рецепт 5: Овощи гриль',
+    'Рецепт 6: Домашний хлеб',
+    'Рецепт 7: Фруктовый пирог',
+    'Рецепт 8: Морепродукты паста',
+    'Рецепт 9: Цезарь роллы',
+    'Рецепт 10: Медовое печенье',
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ListView.builder'),
+        title: const Text('ListView.separated'),
       ),
-      body: ListView.builder(
+      body: ListView.separated(
         padding: const EdgeInsets.all(16.0),
         itemCount: recipes.length,
+        separatorBuilder: (context, index) => const Divider(
+          color: Colors.purple,
+          height: 24,
+          thickness: 1,
+        ),
         itemBuilder: (context, index) {
-          final recipe = recipes[index];
-          return Card(
-            margin: const EdgeInsets.only(bottom: 12),
-            child: ListTile(
-              leading: CircleAvatar(
-                backgroundColor: Colors.green[100],
-                child: Icon(
-                  _getIconForType(recipe['type']),
-                  color: Colors.green,
+          return Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.purple[50],
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.purple,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Center(
+                    child: Text(
+                      '${index + 1}',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              title: Text(recipe['title']),
-              subtitle: Text('${recipe['time']} • ${recipe['type']}'),
-              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Text(
+                    recipes[index],
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ],
             ),
           );
         },
       ),
     );
-  }
-
-  IconData _getIconForType(String type) {
-    switch (type) {
-      case 'Завтрак':
-        return Icons.breakfast_dining;
-      case 'Обед':
-        return Icons.lunch_dining;
-      case 'Ужин':
-        return Icons.dinner_dining;
-      case 'Десерт':
-        return Icons.cake;
-      case 'Перекус':
-        return Icons.coffee;
-      default:
-        return Icons.restaurant;
-    }
   }
 }
