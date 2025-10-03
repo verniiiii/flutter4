@@ -11,20 +11,38 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:prac4/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('Navigation between screens works', (WidgetTester tester) async {
+    await tester.pumpWidget(const RecipeApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Initially on Column screen
+    expect(find.text('Список: Column'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    // Tap on ListView in bottom navigation
+    await tester.tap(find.text('ListView'));
+    await tester.pumpAndSettle();
+
+    // Now should be on ListView screen
+    expect(find.text('Список: ListView'), findsOneWidget);
+
+    // Tap on Separated in bottom navigation
+    await tester.tap(find.text('Separated'));
+    await tester.pumpAndSettle();
+
+    // Now should be on Separated screen
+    expect(find.text('Список: ListView.separated'), findsOneWidget);
+  });
+
+  testWidgets('Add recipe functionality works', (WidgetTester tester) async {
+    await tester.pumpWidget(const RecipeApp());
+
+    // Count initial number of recipes
+    final initialCardCount = find.byType(Card).evaluate().length;
+
+    // Tap the add button
+    await tester.tap(find.byType(FloatingActionButton));
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Verify that a new recipe was added
+    expect(find.byType(Card).evaluate().length, greaterThan(initialCardCount));
   });
 }
