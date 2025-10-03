@@ -42,7 +42,12 @@ class RecipeListBasic extends StatelessWidget {
           _buildRecipeCard('Домашний борщ', '60 минут', Icons.soup_kitchen),
           _buildRecipeCard('Воздушные панкейки', '30 минут', Icons.cake),
           _buildRecipeCard('Шоколадный мусс', '40 минут', Icons.icecream),
-          _buildRecipeCard('Греческий салат', '15 минут', Icons.salad),
+          _buildRecipeCard('Классический омлет', '15 минут', Icons.breakfast_dining),
+          _buildRecipeCard('Паста карбонара', '25 минут', Icons.dinner_dining),
+          _buildRecipeCard('Салат Цезарь', '20 минут', Icons.lunch_dining),
+          _buildRecipeCard('Домашний борщ', '60 минут', Icons.soup_kitchen),
+          _buildRecipeCard('Воздушные панкейки', '30 минут', Icons.cake),
+          _buildRecipeCard('Шоколадный мусс', '40 минут', Icons.icecream),
         ],
       ),
     );
